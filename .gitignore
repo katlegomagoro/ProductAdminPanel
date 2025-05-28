@@ -1,0 +1,47 @@
+# Build artifacts
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE settings
+.vscode/
+.idea/
+
+# NuGet and package artifacts
+*.nupkg
+*.snupkg
+.nuget/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Project-specific cache files
+project.lock.json
+project.fragment.lock.json
+
+# Test output
+TestResults/
+
+# Ignore Visual Studio config
+.vs/
+
+# Explicitly track important source folders in this solution
+!DAL/
+!Components/
+!Pages/
+!Shared/
+!Program.cs
+!App.razor
+!_Imports.razor
+!appsettings.json
+!appsettings.Development.json
