@@ -1,6 +1,9 @@
 ﻿namespace ProductAdminPanel.DAL.Enums
 {
-    public class ProductStatus
+    public enum ProductStatus
     {
+        Draft,
+        Active,
+        Discontinued
     }
 }
