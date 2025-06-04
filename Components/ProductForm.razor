@@ -1,5 +1,57 @@
-﻿<h3>ProductForm</h3>
+﻿@using MudBlazor
+@using ProductAdminPanel.DAL.Models
+@using ProductAdminPanel.DAL.Enums
 
-@code {
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_formRef">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="Product Name" @bind-Value="_product.Name" Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="SKU" @bind-Value="_product.SKU" Required="true" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Description" @bind-Value="_product.Description" Lines="3" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudNumericField Label="Price" @bind-Value="_product.Price" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudNumericField Label="Cost Price" @bind-Value="_product.CostPrice" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudNumericField Label="Stock Quantity" @bind-Value="_product.StockQuantity" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudSelect T="ProductStatus" Label="Status" @bind-Value="_product.Status">
+                        @foreach (var status in Enum.GetValues(typeof(ProductStatus)).Cast<ProductStatus>())
+                        {
+                            <MudSelectItem T="ProductStatus" Value="@status">@status</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudDatePicker Label="Launch Date" @bind-Date="_product.LaunchDate" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudDatePicker Label="End Date" @bind-Date="_product.EndDate" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSelect T="Guid" Label="Supplier" @bind-Value="_product.SupplierId">
+                        @foreach (var s in _suppliers)
+                        {
+                            <MudSelectItem Value="@s.Id">@s.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
 
-}
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>

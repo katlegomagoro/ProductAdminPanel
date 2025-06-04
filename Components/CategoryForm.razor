@@ -1,5 +1,45 @@
-﻿<h3>CategoryForm</h3>
+﻿@using MudBlazor
+@using ProductAdminPanel.DAL.Models
 
-@code {
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_formRef">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="Category Name"
+                                  Value="_category.Name"
+                                  ValueChanged="@(EventCallback.Factory.Create<string>(this, OnNameChanged))"
+                                  Required="true"
+                                  For="@(() => _category.Name)"
+                                  Style="width: 100%;" />
+                </MudItem>
 
-}
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="Guid?" Label="Parent Category"
+                               Value="_category.ParentCategoryId"
+                               ValueChanged="@(EventCallback.Factory.Create<Guid?>(this, OnParentChanged))"
+                               Style="width: 100%;">
+                        <MudSelectItem T="Guid?" Value="null">None</MudSelectItem>
+                        @foreach (var cat in _availableParents)
+                        {
+                            <MudSelectItem T="Guid?" Value="@cat.Id">@cat.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="Description"
+                                  Value="_category.Description"
+                                  ValueChanged="@(EventCallback.Factory.Create<string?>(this, OnDescriptionChanged))"
+                                  Lines="3"
+                                  Style="width: 100%;" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text" Color="Color.Default" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,10 +1,9 @@
 ﻿using ProductAdminPanel.DAL.DbContex;
 using ProductAdminPanel.DAL.Models;
-using ProductAdminPanel.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProductAdminPanel.Services.Interfaces;
 
-
-namespace ProductAdminPanel.Services
+namespace ProductAdminPanel.Services.Implementations
 {
     public class CategoryService : ICategoryService
     {
@@ -30,8 +29,15 @@ namespace ProductAdminPanel.Services
 
         public async Task UpdateAsync(Category category)
         {
-            _context.Categories.Update(category);
-            await _context.SaveChangesAsync();
+            var existing = await _context.Categories.FindAsync(category.Id);
+            if (existing != null)
+            {
+                existing.Name = category.Name;
+                existing.Description = category.Description;
+                existing.ParentCategoryId = category.ParentCategoryId;
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)

@@ -1,5 +1,50 @@
-﻿<h3>SupplierForm</h3>
+﻿@using MudBlazor
+@using System.ComponentModel.DataAnnotations
 
-@code {
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudForm @ref="_formRef">
+                    <MudGrid>
+                        <MudItem xs="12" sm="6">
+                            <MudTextField Label="Name"
+                                          Value="_supplier.Name"
+                                          ValueChanged="@(EventCallback.Factory.Create<string>(this, OnNameChanged))"
+                                          Required="true"
+                                          Style="width: 100%;" />
 
-}
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudTextField Label="Email"
+                                          Value="_supplier.ContactEmail"
+                                          ValueChanged="@(EventCallback.Factory.Create<string>(this, OnEmailChanged))"
+                                          Validation="ValidateEmail"
+                                          Required="true"
+                                          Style="width: 100%;" />
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudTextField Label="Phone"
+                                          Value="_supplier.ContactNumber"
+                                          ValueChanged="@(EventCallback.Factory.Create<string>(this, OnPhoneChanged))"
+                                          Required="true"
+                                          Style="width: 100%;" />
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudTextField Label="Website"
+                                          Value="_supplier.Website"
+                                          ValueChanged="@(EventCallback.Factory.Create<string>(this, OnWebsiteChanged))"
+                                          Style="width: 100%;" />
+
+                        </MudItem>
+                    </MudGrid>
+                </MudForm>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text" Color="Color.Default" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>
