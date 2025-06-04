@@ -29,8 +29,16 @@ namespace ProductAdminPanel.Services.Implementations
 
         public async Task UpdateAsync(Supplier supplier)
         {
-            _context.Suppliers.Update(supplier);
-            await _context.SaveChangesAsync();
+            var existing = await _context.Suppliers.FindAsync(supplier.Id);
+            if (existing != null)
+            {
+                existing.Name = supplier.Name;
+                existing.ContactEmail = supplier.ContactEmail;
+                existing.ContactNumber = supplier.ContactNumber;
+                existing.Website = supplier.Website;
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)

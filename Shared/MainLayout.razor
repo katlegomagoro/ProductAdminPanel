@@ -1,19 +1,52 @@
 ﻿@inherits LayoutComponentBase
+@using MudBlazor
 
-<PageTitle>ProductAdminPanel</PageTitle>
+<MudLayout>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <!-- Sidebar Navigation Drawer -->
+    <MudDrawer Elevation="1"
+               @bind-Open="_drawerOpen"
+               Variant="DrawerVariant.Responsive"
+               ClipMode="DrawerClipMode.Always"
+               Width="260px"
+               Class="mud-theme-background">
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        <MudNavMenu Dense="true">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+                Home
+            </MudNavLink>
+            <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingCart">
+                Products
+            </MudNavLink>
+            <MudNavLink Href="/suppliers" Icon="@Icons.Material.Filled.People">
+                Suppliers
+            </MudNavLink>
+            <MudNavLink Href="/categories" Icon="@Icons.Material.Filled.Category">
+                Categories
+            </MudNavLink>
+        </MudNavMenu>
 
-        <article class="content px-4">
+    </MudDrawer>
+
+    <!-- Top AppBar and Page Body -->
+    <MudMainContent>
+        <MudAppBar Elevation="2">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                           OnClick="@ToggleDrawer"
+                           Edge="Edge.Start"
+                           Color="Color.Inherit" />
+            <MudText Typo="Typo.h6">Product Admin Panel</MudText>
+        </MudAppBar>
+
+        <MudContainer MaxWidth="MaxWidth.False" Class="pa-4">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+
+    private void ToggleDrawer() => _drawerOpen = !_drawerOpen;
+}

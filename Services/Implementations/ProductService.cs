@@ -3,7 +3,6 @@ using ProductAdminPanel.DAL.Models;
 using ProductAdminPanel.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ProductAdminPanel.Services.Implementations
 {
     public class ProductService : IProductService
@@ -30,8 +29,22 @@ namespace ProductAdminPanel.Services.Implementations
 
         public async Task UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            var existing = await _context.Products.FindAsync(product.Id);
+            if (existing != null)
+            {
+                existing.Name = product.Name;
+                existing.SKU = product.SKU;
+                existing.Description = product.Description;
+                existing.Price = product.Price;
+                existing.CostPrice = product.CostPrice;
+                existing.StockQuantity = product.StockQuantity;
+                existing.Status = product.Status;
+                existing.LaunchDate = product.LaunchDate;
+                existing.EndDate = product.EndDate;
+                existing.SupplierId = product.SupplierId;
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)
@@ -44,5 +57,4 @@ namespace ProductAdminPanel.Services.Implementations
             }
         }
     }
-
 }
